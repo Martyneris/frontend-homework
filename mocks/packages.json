@@ -1,0 +1,14 @@
+[
+  {
+    "id": "single",
+    "title": "Single",
+    "reportCount": 1,
+    "price": { "amount": 14.99,  "currency": "EUR" }
+  },
+  {
+    "id": "double",
+    "title": "Double",
+    "reportCount": 2,
+    "price": { "amount": 19.99,  "currency": "EUR" }
+  }
+]
