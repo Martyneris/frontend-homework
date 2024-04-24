@@ -1,0 +1,15 @@
+export const translationsEn = {
+  selectPackageTitle: 'Select a Package',
+  enterYourDetailsTitle: 'Enter your details',
+  reviewYourOrderTitle: 'Review your order',
+  purchaseCompleteTitle: 'Purchase complete!',
+  buttonNext: 'Next',
+  buttonCompletePurchase: 'Complete purchase',
+  report: 'report',
+  reports: 'reports',
+  package: 'Package',
+  buyer: 'Buyer',
+  price: 'Price',
+  vat: 'VAT',
+  total: 'Total',
+};

@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
-import packagesResponse from '../../mocks/packages.json';
-import vatRatesResponse from '../../mocks/vatRates.json';
+import packagesResponse from '../../../mocks/packages.json';
+import vatRatesResponse from '../../../mocks/vatRates.json';
 
 export const config = {
   runtime: 'edge',
