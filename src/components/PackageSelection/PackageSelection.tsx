@@ -5,6 +5,7 @@ import { translationsEn } from '@/src/translations/en';
 import { PackageID } from '@/src/types/Packages';
 import { OptionRow } from './components/OptionRow/OptionRow';
 import { usePackages } from '@/src/hooks/usePackages';
+import { colors } from '@/src/styles/styles';
 
 interface PackageSelectionProps {
   selectedPackage: PackageID;
@@ -18,31 +19,27 @@ export const PackageSelection: FC<PackageSelectionProps> = ({
 }) => {
   const { data: packages, isLoading } = usePackages();
 
+  if (isLoading) return <CircularProgress sx={{ color: colors.brandYellow }} />;
+
   return (
     <FormLayout
       title={translationsEn.selectPackageTitle}
       buttonTitle={translationsEn.buttonNext}
       onSubmit={onSubmit}
     >
-      {isLoading ? (
-        <Stack alignItems="center">
-          <CircularProgress data-testid="loadingIndicator" />
-        </Stack>
-      ) : (
-        Children.toArray(
-          packages?.map((item, index) => {
-            return (
-              <OptionRow
-                title={`${item.id} (${item.reportCount} ${item.reportCount > 1 ? translationsEn.reports : translationsEn.report})`}
-                price={item.price}
-                oldPrice={index === 1 ? { amount: 29.98, currency: 'EUR' } : undefined}
-                checked={selectedPackage === item.id}
-                onSelect={() => onPackageSelect(item.id)}
-                testId={item.id}
-              />
-            );
-          }),
-        )
+      {Children.toArray(
+        packages?.map((item, index) => {
+          return (
+            <OptionRow
+              title={`${item.id} (${item.reportCount} ${item.reportCount > 1 ? translationsEn.reports : translationsEn.report})`}
+              price={item.price}
+              oldPrice={index === 1 ? { amount: 29.98, currency: 'EUR' } : undefined}
+              checked={selectedPackage === item.id}
+              onSelect={() => onPackageSelect(item.id)}
+              testId={item.id}
+            />
+          );
+        }),
       )}
     </FormLayout>
   );

@@ -73,7 +73,7 @@ export const Checkout: FC<CheckoutProps> = ({ userData, onSuccess }) => {
     onSuccess();
   };
 
-  if (showLoadingIndicator) return <CircularProgress color="info" />;
+  if (showLoadingIndicator) return <CircularProgress sx={{ color: colors.brandYellow }} />;
 
   return (
     <FormLayout
