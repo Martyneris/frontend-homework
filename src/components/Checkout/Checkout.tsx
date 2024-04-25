@@ -5,7 +5,7 @@ import { PackageID } from '@/src/types/Packages';
 import { useCompletePurchase } from '@/src/hooks/useCompletePurchase';
 import { useVatRates } from '@/src/hooks/useVatRates';
 import { useUserCountry } from '@/src/hooks/useUserCountry';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { colors } from '@/src/styles/styles';
 import { usePackages } from '@/src/hooks/usePackages';
 import { pickCurrencySymbol } from '@/src/utils/currencies';
@@ -37,10 +37,12 @@ interface CheckoutProps {
 }
 
 export const Checkout: FC<CheckoutProps> = ({ userData, onSuccess }) => {
-  const { data: packages } = usePackages();
-  const { data: vatRates } = useVatRates();
-  const { data: userCountry } = useUserCountry();
+  const { data: packages, isLoading: isLoadingPackages } = usePackages();
+  const { data: vatRates, isLoading: isLoadingVatRates } = useVatRates();
+  const { data: userCountry, isLoading: isLoadingUserCountry } = useUserCountry();
   const { mutateAsync: completePurchase } = useCompletePurchase();
+
+  const showLoadingIndicator = isLoadingPackages || isLoadingVatRates || isLoadingUserCountry;
 
   const selectedPackage = packages?.find((item) => item.id === userData.packageId);
   const userVatRate = vatRates?.find((rate) => rate.countryCode === userCountry);
@@ -70,6 +72,8 @@ export const Checkout: FC<CheckoutProps> = ({ userData, onSuccess }) => {
     });
     onSuccess();
   };
+
+  if (showLoadingIndicator) return <CircularProgress color="info" />;
 
   return (
     <FormLayout

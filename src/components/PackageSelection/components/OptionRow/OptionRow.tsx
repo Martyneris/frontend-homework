@@ -11,10 +11,18 @@ interface OptionRowProps {
   price: PackagePrice;
   checked: boolean;
   onSelect: () => void;
+  testId: string;
   oldPrice?: PackagePrice;
 }
 
-export const OptionRow: FC<OptionRowProps> = ({ title, price, checked, onSelect, oldPrice }) => {
+export const OptionRow: FC<OptionRowProps> = ({
+  title,
+  price,
+  checked,
+  onSelect,
+  testId,
+  oldPrice,
+}) => {
   return (
     <Box
       component="div"
@@ -25,6 +33,7 @@ export const OptionRow: FC<OptionRowProps> = ({ title, price, checked, onSelect,
       width="100%"
       justifyContent="space-between"
       sx={{ cursor: 'pointer' }}
+      data-testid={testId}
     >
       <Box flexDirection="row" display="inline-block">
         <Checkbox
