@@ -9,7 +9,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import { colors } from '@/src/styles/styles';
 import { usePackages } from '@/src/hooks/usePackages';
 import { pickCurrencySymbol } from '@/src/utils/currencies';
-import { log } from 'console';
+import useCheckoutCalculations from './hooks/useCheckoutCalculations';
 
 const CheckoutRow = ({ name, value }: { name: string; value: string | number }) => {
   return (
@@ -42,16 +42,14 @@ export const Checkout: FC<CheckoutProps> = ({ userData, onSuccess }) => {
   const { data: userCountry, isLoading: isLoadingUserCountry } = useUserCountry();
   const { mutateAsync: completePurchase } = useCompletePurchase();
 
+  const { selectedPackage, userVatRate, vatAmount, grossAmount } = useCheckoutCalculations(
+    userData.packageId,
+    packages,
+    vatRates,
+    userCountry,
+  );
+
   const showLoadingIndicator = isLoadingPackages || isLoadingVatRates || isLoadingUserCountry;
-
-  const selectedPackage = packages?.find((item) => item.id === userData.packageId);
-  const userVatRate = vatRates?.find((rate) => rate.countryCode === userCountry);
-
-  const vatAmount =
-    userVatRate?.rate && selectedPackage
-      ? +((userVatRate?.rate * selectedPackage.price.amount) / 100).toFixed(2)
-      : 0;
-  const grossAmount = selectedPackage && +(selectedPackage?.price.amount + vatAmount).toFixed(2);
 
   const handleSubmit = async (data: UserData) => {
     const { packageId, firstName, lastName, email } = data;
